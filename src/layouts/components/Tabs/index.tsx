@@ -14,7 +14,6 @@ const LayoutTabs = () => {
 	const dispatch = useDispatch();
 	const { tabsList } = useSelector((state: RootState) => state.reducer.tabs);
 
-	const { TabPane } = Tabs;
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
 	const [activeValue, setActiveValue] = useState<string>(pathname);
@@ -54,6 +53,17 @@ const LayoutTabs = () => {
 		dispatch(setTabsList(tabsList.filter((item: Menu.MenuOptions) => item.path !== tabPath)));
 	};
 
+	const tabItems = tabsList.map((item: Menu.MenuOptions) => ({
+		label: (
+			<span>
+				{item.path == HOME_URL ? <HomeFilled /> : ""}
+				{item.title}
+			</span>
+		),
+		key: item.path,
+		closable: item.path !== HOME_URL
+	}));
+
 	return (
 		<div className="tabs">
 			<Tabs
@@ -64,22 +74,8 @@ const LayoutTabs = () => {
 				onEdit={path => {
 					delTabs(path as string);
 				}}
-			>
-				{tabsList.map((item: Menu.MenuOptions) => {
-					return (
-						<TabPane
-							key={item.path}
-							tab={
-								<span>
-									{item.path == HOME_URL ? <HomeFilled /> : ""}
-									{item.title}
-								</span>
-							}
-							closable={item.path !== HOME_URL}
-						></TabPane>
-					);
-				})}
-			</Tabs>
+				items={tabItems}
+			></Tabs>
 			<MoreButton delTabs={delTabs}></MoreButton>
 		</div>
 	);
