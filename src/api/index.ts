@@ -5,7 +5,7 @@ import { ResultData } from "@/api/interface";
 import { ResultEnum } from "@/enums/httpEnum";
 import { checkStatus } from "./helper/checkStatus";
 import { AxiosCanceler } from "./helper/axiosCancel";
-import { setToken } from "@/redux/modules/global";
+import { setToken } from "@/store/slice/globalSlice";
 import { message } from "antd";
 import { store } from "@/store";
 

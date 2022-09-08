@@ -1,5 +1,5 @@
 import { Dropdown, Menu } from "antd";
-import { setAssemblySize } from "@/redux/modules/global";
+import { setAssemblySize } from "@/store/slice/globalSlice";
 import { RootState, useDispatch, useSelector } from "@/store";
 import type { SizeType } from "antd/lib/config-provider/SizeContext";
 

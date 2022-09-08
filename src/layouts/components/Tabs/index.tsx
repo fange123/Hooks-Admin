@@ -3,7 +3,7 @@ import { HomeFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { HOME_URL } from "@/config/config";
-import { setTabsList } from "@/redux/modules/tabs";
+import { setTabsList } from "@/store/slice/tabsSlice";
 import { RootState, useDispatch, useSelector } from "@/store";
 import { routerArray } from "@/routers";
 import { searchRoute } from "@/utils/util";
