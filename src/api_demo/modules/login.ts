@@ -1,8 +1,8 @@
-import { Login } from "@/api/interface/index";
-import { PORT1 } from "@/api/config/servicePort";
+import { Login } from "@/api_demo/interface/index";
+import { PORT1 } from "@/api_demo/config/servicePort";
 import qs from "qs";
 
-import http from "@/api";
+import http from "@/api_demo";
 
 /**
  * @name 登录模块

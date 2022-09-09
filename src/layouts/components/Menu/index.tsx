@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, Spin } from "antd";
+import { Menu } from "antd";
 import { findAllBreadcrumb, getOpenKeys, handleRouter, searchRoute } from "@/utils/util";
 import { setMenuList as reduxSetMenuList } from "@/store/slice/menuSlice";
 import { setBreadcrumbList } from "@/store/slice/breadcrumbSlice";
@@ -9,7 +9,6 @@ import { RootState, useDispatch, useSelector } from "@/store";
 import type { MenuProps } from "antd";
 import Logo from "./components/Logo";
 import "./index.less";
-import { useGetMenuListQuery } from "@/store/api/loginApi";
 import { menuRoutesData } from "@/routers";
 import { RouteObject } from "@/routers/interface";
 
@@ -65,11 +64,8 @@ const LayoutMenu = () => {
 
 	// 获取菜单列表并处理成 antd menu 需要的格式
 	const [menuList, setMenuList] = useState<MenuItem[]>([]);
-	const { data, isFetching, isSuccess } = useGetMenuListQuery({});
 
 	const getMenuData = () => {
-		if (!data) return;
-
 		setMenuList(deepLoopFloat(staticRoutes));
 		// 存储处理过后的所有面包屑导航栏到 redux 中
 		dispatch(setBreadcrumbList(findAllBreadcrumb(staticRoutes)));
@@ -81,10 +77,8 @@ const LayoutMenu = () => {
 	};
 
 	useEffect(() => {
-		if (isSuccess) {
-			getMenuData();
-		}
-	}, [isSuccess]);
+		getMenuData();
+	}, []);
 
 	// 点击当前菜单跳转页面
 	const navigate = useNavigate();
@@ -97,19 +91,17 @@ const LayoutMenu = () => {
 
 	return (
 		<div className="menu">
-			<Spin spinning={isFetching} tip="Loading...">
-				<Logo isCollapse={isCollapse}></Logo>
-				<Menu
-					theme="dark"
-					mode="inline"
-					triggerSubMenuAction="click"
-					openKeys={openKeys}
-					selectedKeys={selectedKeys}
-					items={menuList}
-					onClick={clickMenu}
-					onOpenChange={onOpenChange}
-				></Menu>
-			</Spin>
+			<Logo isCollapse={isCollapse}></Logo>
+			<Menu
+				theme="dark"
+				mode="inline"
+				triggerSubMenuAction="click"
+				openKeys={openKeys}
+				selectedKeys={selectedKeys}
+				items={menuList}
+				onClick={clickMenu}
+				onOpenChange={onOpenChange}
+			></Menu>
 		</div>
 	);
 };

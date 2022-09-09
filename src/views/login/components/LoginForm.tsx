@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import { Login } from "@/api/interface";
+import { Login } from "@/api_demo/interface";
 import { HOME_URL } from "@/config/config";
 import { useTranslation } from "react-i18next";
 import { setTabsList } from "@/store/slice/tabsSlice";
