@@ -1,4 +1,5 @@
 import { AuthState } from "@/store/interface";
+import { localSet } from "@/utils/util";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const authState: AuthState = {
@@ -15,6 +16,7 @@ const authSlice = createSlice({
 		},
 		setAuthRouter(state: AuthState, { payload }: PayloadAction<string[]>) {
 			state.authRouter = payload;
+			localSet("authRouter", JSON.stringify(state.authRouter));
 		}
 	}
 });

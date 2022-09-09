@@ -2,7 +2,6 @@ import { useLocation, Navigate } from "react-router-dom";
 import { localGet, searchRoute } from "@/utils/util";
 import { rootRouter } from "@/routers/index";
 import { HOME_URL } from "@/config/config";
-import { RootState, useSelector } from "@/store";
 
 /**
  * @description 路由守卫组件
@@ -12,7 +11,7 @@ const AuthRouter = (props: { children: JSX.Element }) => {
 
 	const token = localGet("token");
 	// * Dynamic Router(动态路由，根据后端返回的菜单数据生成的一维数组)
-	const { authRouter } = useSelector((state: RootState) => state.reducer.auth);
+	const authRouter = JSON.parse(localGet("authRouter"));
 
 	const { pathname } = useLocation();
 	const route = searchRoute(pathname, rootRouter);

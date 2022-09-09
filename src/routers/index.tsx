@@ -14,9 +14,19 @@ export const menuRoutesData: RouteObject[] = [
 			{
 				path: "/home",
 				roles: ["admin", "test"],
-				element: lazyLoad(React.lazy(() => import("@/views/home/index"))),
+				element: lazyLoad(React.lazy(() => import("@/views/home"))),
 				meta: {
 					title: "首页",
+					icon: <SmileOutlined />,
+					requiresAuth: true
+				}
+			},
+			{
+				path: "/user/info",
+				roles: ["admin", "test"],
+				element: lazyLoad(React.lazy(() => import("@/views/userInfo"))),
+				meta: {
+					title: "用户信息",
 					icon: <SmileOutlined />,
 					requiresAuth: true
 				}
@@ -46,6 +56,63 @@ export const menuRoutesData: RouteObject[] = [
 							title: "批量导入数据",
 							icon: <SendOutlined />
 						}
+					}
+				]
+			},
+			{
+				path: "/menu",
+				meta: {
+					title: "菜单",
+					icon: <SettingOutlined />,
+					requiresAuth: true
+				},
+				children: [
+					{
+						path: "/menu/menu1",
+						element: lazyLoad(React.lazy(() => import("@/views/menu/menu1"))),
+						meta: {
+							title: "菜单1",
+							icon: <SkinOutlined />,
+							requiresAuth: true
+						}
+					},
+					{
+						path: "/menu/menu2",
+						meta: {
+							title: "菜单2",
+							icon: <SkinOutlined />,
+							requiresAuth: true
+						},
+						children: [
+							{
+								path: "/menu/menu2/menu21",
+								element: lazyLoad(React.lazy(() => import("@/views/menu/menu2/menu21"))),
+								meta: {
+									title: "菜单21",
+									icon: <SkinOutlined />,
+									requiresAuth: true
+								}
+							},
+							{
+								path: "/menu/menu2/menu22",
+								meta: {
+									title: "菜单22",
+									icon: <SkinOutlined />,
+									requiresAuth: true
+								},
+								children: [
+									{
+										path: "/menu/menu2/menu22/menu221",
+										element: lazyLoad(React.lazy(() => import("@/views/menu/menu2/menu22/menu221"))),
+										meta: {
+											title: "菜单221",
+											icon: <SkinOutlined />,
+											requiresAuth: true
+										}
+									}
+								]
+							}
+						]
 					}
 				]
 			}
