@@ -1,6 +1,6 @@
 import { searchRoute } from "@/utils/util";
 import { useLocation } from "react-router-dom";
-import { routerArray } from "@/routers";
+import { dynamicRoutes } from "@/routers";
 import { RootState, useSelector } from "@/store";
 
 /**
@@ -9,7 +9,7 @@ import { RootState, useSelector } from "@/store";
 const useAuthButtons = () => {
 	const { authButtons } = useSelector((state: RootState) => state.reducer.auth);
 	const { pathname } = useLocation();
-	const route = searchRoute(pathname, routerArray);
+	const route = searchRoute(pathname, dynamicRoutes);
 
 	return {
 		BUTTONS: authButtons[route.meta!.key!] || {}

@@ -2,9 +2,10 @@
 declare namespace Menu {
 	interface MenuOptions {
 		path: string;
-		title: string;
+		title?: string;
 		icon?: string;
 		isLink?: string;
+		element?: React.ReactNode;
 		close?: boolean;
 		children?: MenuOptions[];
 	}

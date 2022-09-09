@@ -79,7 +79,7 @@ export const getOpenKeys = (path: string) => {
  * @returns array
  */
 export const searchRoute = (path: string, routes: RouteObject[] = []): RouteObject => {
-	let result: RouteObject = {};
+	let result: RouteObject = {} as RouteObject;
 	for (let item of routes) {
 		if (item.path === path) return item;
 		if (item.children) {
@@ -120,7 +120,7 @@ export const getBreadcrumbList = (path: string, menuList: Menu.MenuOptions[]) =>
 			getNodePath(menuList[i]);
 		}
 	} catch (e) {
-		return tempPath.map(item => item.title);
+		return tempPath.map(item => item?.meta?.title);
 	}
 };
 

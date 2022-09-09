@@ -23,7 +23,6 @@ const LoginForm = () => {
 		try {
 			loginForm.password = md5(loginForm.password);
 			const { data } = (await login(loginForm)) as HttpResult;
-			console.log(data.data!.access_token);
 			dispatch(setToken(data.data!.access_token));
 			dispatch(setTabsList([]));
 			message.success("登录成功！");

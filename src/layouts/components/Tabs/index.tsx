@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { HOME_URL } from "@/config/config";
 import { setTabsList } from "@/store/slice/tabsSlice";
 import { RootState, useDispatch, useSelector } from "@/store";
-import { routerArray } from "@/routers";
+import { rootRouter } from "@/routers";
 import { searchRoute } from "@/utils/util";
 import MoreButton from "./components/MoreButton";
 import "./index.less";
@@ -29,7 +29,8 @@ const LayoutTabs = () => {
 
 	// add tabs
 	const addTabs = () => {
-		const route = searchRoute(pathname, routerArray);
+		const route = searchRoute(pathname, rootRouter);
+
 		let newTabsList = JSON.parse(JSON.stringify(tabsList));
 		if (tabsList.every((item: any) => item.path !== route.path)) {
 			newTabsList.push({ title: route.meta!.title, path: route.path });

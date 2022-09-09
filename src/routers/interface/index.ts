@@ -1,8 +1,11 @@
+import React from "react";
+
 export interface MetaProps {
 	keepAlive?: boolean;
 	requiresAuth?: boolean;
 	title: string;
 	key?: string;
+	icon?: React.ReactNode;
 }
 
 export interface RouteObject {
@@ -10,7 +13,9 @@ export interface RouteObject {
 	children?: RouteObject[];
 	element?: React.ReactNode;
 	index?: boolean;
-	path?: string;
+	path: string;
 	meta?: MetaProps;
 	isLink?: string;
+	roles?: string[];
+	redirect?: string;
 }

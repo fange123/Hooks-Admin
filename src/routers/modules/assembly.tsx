@@ -6,10 +6,11 @@ import { RouteObject } from "@/routers/interface";
 // 常用组件模块
 const assemblyRouter: Array<RouteObject> = [
 	{
-		element: <LayoutIndex />,
+		path: "/assembly",
 		meta: {
 			title: "常用组件"
 		},
+		element: <LayoutIndex />,
 		children: [
 			{
 				path: "/assembly/selectIcon",

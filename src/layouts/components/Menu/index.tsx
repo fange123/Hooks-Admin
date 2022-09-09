@@ -7,10 +7,11 @@ import { setBreadcrumbList } from "@/store/slice/breadcrumbSlice";
 import { setAuthRouter } from "@/store/slice/authSlice";
 import { RootState, useDispatch, useSelector } from "@/store";
 import type { MenuProps } from "antd";
-import * as Icons from "@ant-design/icons";
 import Logo from "./components/Logo";
 import "./index.less";
 import { useGetMenuListQuery } from "@/store/api/loginApi";
+import { menuRoutesData } from "@/routers";
+import { RouteObject } from "@/routers/interface";
 
 const LayoutMenu = () => {
 	const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const LayoutMenu = () => {
 	const { pathname } = useLocation();
 	const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
 	const [openKeys, setOpenKeys] = useState<string[]>([]);
+	const staticRoutes = menuRoutesData[0].children!;
 
 	// 刷新页面菜单保持高亮
 	useEffect(() => {
@@ -51,18 +53,12 @@ const LayoutMenu = () => {
 		} as MenuItem;
 	};
 
-	// 动态渲染 Icon 图标
-	const customIcons: { [key: string]: any } = Icons;
-	const addIcon = (name: string) => {
-		return React.createElement(customIcons[name]);
-	};
-
 	// 处理后台返回菜单 key 值为 antd 菜单需要的 key 值
-	const deepLoopFloat = (menuList: Menu.MenuOptions[], newArr: MenuItem[] = []) => {
-		menuList.forEach((item: Menu.MenuOptions) => {
+	const deepLoopFloat = (staticRoutes: RouteObject[], newArr: MenuItem[] = []) => {
+		staticRoutes.forEach(item => {
 			// 下面判断代码解释 *** !item?.children?.length   ==>   (!item.children || item.children.length === 0)
-			if (!item?.children?.length) return newArr.push(getItem(item.title, item.path, addIcon(item.icon!)));
-			newArr.push(getItem(item.title, item.path, addIcon(item.icon!), deepLoopFloat(item.children)));
+			if (!item?.children?.length) return newArr.push(getItem(item?.meta?.title, item.path, item?.meta?.icon));
+			newArr.push(getItem(item?.meta?.title, item.path, item?.meta?.icon, deepLoopFloat(item.children)));
 		});
 		return newArr;
 	};
@@ -73,13 +69,15 @@ const LayoutMenu = () => {
 
 	const getMenuData = () => {
 		if (!data) return;
-		setMenuList(deepLoopFloat(data.data));
+
+		setMenuList(deepLoopFloat(staticRoutes));
 		// 存储处理过后的所有面包屑导航栏到 redux 中
-		dispatch(setBreadcrumbList(findAllBreadcrumb(data.data)));
+		dispatch(setBreadcrumbList(findAllBreadcrumb(staticRoutes)));
+
 		// 把路由菜单处理成一维数组，存储到 redux 中，做菜单权限判断
-		const dynamicRouter = handleRouter(data.data);
+		const dynamicRouter = handleRouter(staticRoutes);
 		dispatch(setAuthRouter(dynamicRouter));
-		dispatch(reduxSetMenuList(data.data));
+		dispatch(reduxSetMenuList(staticRoutes));
 	};
 
 	useEffect(() => {
@@ -93,6 +91,7 @@ const LayoutMenu = () => {
 	const clickMenu: MenuProps["onClick"] = ({ key }: { key: string }) => {
 		const route = searchRoute(key, reduxMenuList);
 		if (route.isLink) window.open(route.isLink, "_blank");
+
 		navigate(key);
 	};
 

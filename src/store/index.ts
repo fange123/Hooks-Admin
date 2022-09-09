@@ -22,7 +22,10 @@ export const store = configureStore({
 		[loginApi.reducerPath]: loginApi.reducer,
 		reducer
 	},
-	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(loginApi.middleware)
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware({
+			serializableCheck: false
+		}).concat(loginApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;
